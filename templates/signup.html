@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <h1>Register</h1>
+    <form action="{{url_for('profile')}}" method="POST">
+        <h5>Enter the room code: </h5>
+        <div>
+            <input type="text" name="Nombres" placeholder="Escriba su nombre aquí">
+        </div>
+        <div>
+            <input type="text" name="Apellidos" placeholder="Escriba sus apellidos">
+        </div>
+        <div>
+            <input type="text" name="Email" placeholder="Escriba su email">
+        </div>
+        <div>
+            <input type="text" name="Contraseña">
+        </div>
+        <input type="text" name="Tipo de tienda" placeholder="Escriba el tipo de tienda que tiene">
+        <div>
+            <button>Submit</button> 
+        </div>
+    </form>
+</body>
+</html>
