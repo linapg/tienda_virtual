@@ -8,21 +8,28 @@
 </head>
 <body>
     <h1>Register</h1>
-    <form action="{{url_for('profile')}}" method="POST">
+    <form action="{{url_for('profile')}}" method="post">
         <h5>Enter the room code: </h5>
         <div>
             <input type="text" name="Nombres" placeholder="Escriba su nombre aquí">
         </div>
+
         <div>
             <input type="text" name="Apellidos" placeholder="Escriba sus apellidos">
         </div>
+
         <div>
             <input type="text" name="Email" placeholder="Escriba su email">
         </div>
+
         <div>
             <input type="text" name="Contraseña">
         </div>
-        <input type="text" name="Tipo de tienda" placeholder="Escriba el tipo de tienda que tiene">
+
+        <div>
+            <input type="text" name="Tipo de tienda" placeholder="Escriba el tipo de tienda que tiene">
+        </div>
+        
         <div>
             <button>Submit</button> 
         </div>

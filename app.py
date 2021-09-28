@@ -7,7 +7,7 @@ app = Flask(__name__)
 #buena práctica es crear un archivo config.py con esta configuración, pero puede ir aquí también
 #'postgresql://<usuario>:<contraseña>@<direccion de la db>:<puerto>/<nombre de la db>
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:admin@localhost:5433/tiendavirtualdb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:pololo@localhost:5432/tiendavirtualdb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'some-secret-key'
 
@@ -34,10 +34,18 @@ def hello():
 def signup():
     return render_template("signup.html")
 
-@app.route('/profile')
+@app.route('/profile', methods = ["POST"])
 def profile():
-    
-    return "Esta es el página para el perfil con los datos del tendero y la tienda"
+    name = request.form["Nombres"]
+    last_name = request.form["Apellidos"]
+    email = request.form["Email"]
+    password = request.form["Contraseña"]
+    store_type = request.form["Tipo de tienda"]
+
+    shopowner = Shopowner(name, last_name, email, password, store_type)
+    db.session.add(shopowner)
+    db.session.commit()
+    return "Perfil creado"
 
 @app.route('/inventory')
 def inventory():
@@ -103,7 +111,6 @@ def update_shopowner():
     old_song.name = new_name
     db.session.commit()
     return "actualización exitosa"
-
 
 # INFORMACIÓN DE REGISTRO DE PRODUCTO PRODUCTO
 
