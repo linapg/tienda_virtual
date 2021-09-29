@@ -1,0 +1,21 @@
+USER STORIES
+
+- TENDERO
+
+1. Como tendero, quiero que la plataforma me permite registrarme para acceder a todas las herramientas como usuario registrado
+
+2. Como tendero, quiero que la plataforma me permita modificar mi contraseña, para hacer mi ingreso más seguro
+
+3. Como tendero quiero insertar nuevos productos que lleguen a mi tienda para tener control del inventario de mi tienda.
+
+4. Como tendero, quiero tener la posibilidad de clasificar mi tienda por categorías para controlar el tipo de inventario que tendría mi tienda
+
+4. Como tendero quiero implementar nuevas tecnologías para registrar ingresos y egresos de mi negocio
+
+5. Como tendero, quiero tener la posibilidad de recordar mi contraseña, para recuperarla en caso de emergencia
+
+6. Como tendero, quiero una calculadora de ingresos y egresos para saber cuantas utilidades genero en mi tienda
+
+7. Como tendero, quiero que las ventas puedan ser registradas y clasificadas de acuerdo a modalidad de pago, para tener una mejor organización de los ingresos de mi tienda
+
+8. Como tendero, quiero registrar y clasificar mis egresos, para saber en qué gasta la tienda

@@ -1,0 +1,134 @@
+Conflictos de Git merge
+
+Los sistemas de control de versiones consisten en gestionar las contribuciones de diversos autores distribuidos (normalmente, desarrolladores). A veces, se puede dar el caso de que varios desarrolladores intenten editar el mismo contenido. Si el desarrollador A intenta editar código que el desarrollador B está editando, podría producirse un conflicto. Para evitar que se produzcan conflictos, los desarrolladores trabajan en ramas aisladas independientes. La función principal del comando git merge es combinar ramas independientes y resolver los cambios en conflicto.
+
+Análisis de los conflictos de fusión
+La fusión y los conflictos son una parte común de la experiencia de Git. Los conflictos en otras herramientas de control de versiones como SVN pueden ser costosos y hacernos perder mucho tiempo. Con Git, la fusión es coser y cantar. La mayor parte del tiempo Git se las ingeniará para integrar automáticamente los nuevos cambios.
+
+Normalmente los conflictos surgen cuando dos personas han cambiado las mismas líneas de un archivo o si un desarrollador ha eliminado un archivo mientras otro lo estaba modificando. En estos casos, Git no puede determinar automáticamente qué es correcto. Los conflictos solo afectan al desarrollador que realiza la fusión, el resto del equipo no se entera del conflicto. Git marcará el archivo como que tiene un conflicto y detendrá el proceso de fusión. Entonces el desarrollador es el responsable de resolver el conflicto.
+
+Tipos de conflictos de fusión
+Una fusión puede entrar en un estado conflictivo en dos momentos diferentes. Al inicio y durante un proceso de fusión. A continuación, se explica cómo abordar cada uno de estos escenarios de conflicto.
+
+Git no inicia la fusión
+Una fusión no se iniciará si Git detecta que hay cambios en el directorio de trabajo o el entorno de ensayo del proyecto actual. Git no inicia la fusión porque las confirmaciones que se están fusionando podrían sobrescribir estos cambios pendientes. Cuando esto sucede, no se debe a conflictos con otros desarrolladores, sino con cambios locales pendientes. El estado local tendrá que estabilizarse mediante git stash, git checkout, git commit o git reset. Un fallo de fusión durante el inicio provocará que aparezca el siguiente mensaje de error:
+
+error: Entry '<fileName>' not uptodate. Cannot merge. (Changes in working directory)
+Git falla durante la fusión
+Un fallo DURANTE una fusión indica un conflicto entre la rama local actual y la rama que se está fusionando. Esto indica un conflicto con el código de otro desarrollador. Git hará lo posible para fusionar los archivos, pero te dejará cosas para que las resuelvas manualmente en los archivos con conflictos. Un fallo a la mitad de la fusión provocará que aparezca el siguiente mensaje de error:
+
+error: Entry '<fileName>' would be overwritten by merge. Cannot merge. (Changes in staging area)
+Creación de un conflicto de fusión
+Para familiarizarte de verdad con los conflictos de fusión, en la siguiente sección se simulará un conflicto para examinarlo y resolverlo posteriormente. Para el ejemplo, se utilizará una interfaz Git de línea de comandos similar a Unix para ejecutar la simulación del ejemplo.
+
+$ mkdir git-merge-test
+$ cd git-merge-test
+$ git init .
+$ echo "this is some content to mess with" > merge.txt
+$ git add merge.txt
+$ git commit -am"we are commiting the inital content"
+[main (root-commit) d48e74c] we are commiting the inital content
+1 file changed, 1 insertion(+)
+create mode 100644 merge.txt
+Este ejemplo de código ejecuta una secuencia de comandos que realiza lo siguiente.
+
+Crear un nuevo directorio llamado git-merge-test, cambiar a ese directorio e inicializarlo como nuevo repositorio de Git.
+Crear un nuevo archivo de texto merge.txt con algo de contenido en él.
+Añadir merge.txt al repositorio y confirmarlo.
+Ahora tenemos un nuevo repositorio con una sola rama main y un archivo merge.txt con contenido. A continuación, crearemos una nueva rama y la utilizaremos para crear una fusión conflictiva.
+
+$ git checkout -b new_branch_to_merge_later
+$ echo "totally different content to merge later" > merge.txt
+$ git commit -am"edited the content of merge.txt to cause a conflict"
+[new_branch_to_merge_later 6282319] edited the content of merge.txt to cause a conflict
+1 file changed, 1 insertion(+), 1 deletion(-)
+La siguiente secuencia de comandos logra lo siguiente:
+
+Crear y extraer una nueva rama llamada new_branch_to_merge_later.
+Sobrescribir el contenido de merge.txt.
+Confirmar el nuevo contenido.
+Con esta nueva rama new_branch_to_merge_later, hemos creado una confirmación que sobrescribe el contenido de merge.txt.
+
+git checkout main
+Switched to branch 'main'
+echo "content to append" >> merge.txt
+git commit -am"appended content to merge.txt"
+[main 24fbe3c] appended content to merge.tx
+1 file changed, 1 insertion(+)
+Esta cadena de comandos extrae la rama main, añade contenido a merge.txt y lo confirma. Esto ahora pone nuestro repositorio de ejemplo en un estado en el que tenemos 2 nuevas confirmaciones. Una está en la rama main y la otra en la rama new_branch_to_merge_later. En este momento, vamos a usar git merge new_branch_to_merge_later y a ver qué pasa.
+
+$ git merge new_branch_to_merge_later
+Auto-merging merge.txt
+CONFLICT (content): Merge conflict in merge.txt
+Automatic merge failed; fix conflicts and then commit the result.
+¡BUM! 💥 Surge un conflicto. ¡Gracias por avisarnos, Git!
+
+Cómo identificar conflictos de fusión
+Tal y como hemos comprobado en el ejemplo anterior, Git generará un resultado descriptivo para indicarnos que se ha producido un conflicto (CONFLICT). Podemos sacar más información ejecutando el comando git status.
+
+$ git status
+On branch main
+You have unmerged paths.
+(fix conflicts and run "git commit")
+(use "git merge --abort" to abort the merge)
+
+Unmerged paths:
+(use "git add <file>..." to mark resolution)
+
+both modified:   merge.txt
+El resultado de git status indica que hay rutas sin fusionar debido a un conflicto. El archivo merge.text ahora aparece con el estado modificado. Vamos a examinar el archivo y ver lo que se ha modificado.
+
+$ cat merge.txt
+<<<<<<< HEAD
+this is some content to mess with
+content to append
+=======
+totally different content to merge later
+>>>>>>> new_branch_to_merge_later
+Aquí hemos usado el comando cat para mostrar el contenido del archivo merge.txt. Podemos ver algunas nuevas adiciones extrañas:
+
+<<<<<<< HEAD
+=======
+>>>>>>> new_branch_to_merge_later
+Considera estas nuevas líneas como "líneas divisorias de conflictos". La línea ======= es el "centro" del conflicto. Todo el contenido entre el centro y la línea <<<<<<< HEAD es contenido que existe en la rama principal actual a la que apunta la referencia HEAD. Por el contrario, todo el contenido entre el centro y >>>>>>> new_branch_to_merge_later es contenido que está presente en nuestra rama de fusión.
+
+Cómo resolver conflictos de fusión mediante la línea de comandos
+La forma más directa de resolver un conflicto de fusión es editar el archivo conflictivo. Abre el archivo merge.txt en el editor que prefieras. Para nuestro ejemplo, simplemente vamos a eliminar todas las líneas divisorias de conflictos. El contenido de merge.txt modificado tendrá entonces este aspecto:
+
+this is some content to mess with
+content to append
+totally different content to merge later
+Cuando hayas editado el archivo, utiliza git add merge.txt para preparar el nuevo contenido fusionado. Para finalizar la fusión, crea una nueva confirmación ejecutando lo siguiente:
+
+git commit -m "merged and resolved the conflict in merge.txt"
+Git verá que se ha resuelto el conflicto y crea una nueva confirmación de fusión para finalizar la fusión.
+
+Comandos de Git que pueden ayudar a resolver los conflictos de fusión
+Herramientas generales
+git status
+El comando status se utiliza frecuentemente cuando se trabaja con Git y durante una fusión ayudará a identificar los archivos con conflictos.
+
+git log --merge
+Al pasar el argumento --merge al comando git log, se creará un registro con una lista de confirmaciones que entran en conflicto entre las ramas que se van a fusionar.
+
+git diff
+diff ayuda a encontrar diferencias entre los estados de un repositorio/unos archivos. Esto es útil para predecir y evitar conflictos de fusión.
+
+Herramientas para cuando git no puede iniciar una fusión
+git checkout
+checkout puede utilizarse para deshacer cambios en los archivos o para cambiar ramas.
+
+git reset --mixed
+reset puede utilizarse para deshacer cambios en el directorio de trabajo y el entorno de ensayo.
+
+Herramientas para cuando surgen conflictos de git durante una fusión
+git merge --abort
+Si se ejecuta git merge con la opción --abort, se saldrá del proceso de fusión y volverá a poner la rama en el estado que tenía antes de que empezara la fusión.
+
+git reset
+Git reset puede utilizarse durante un conflicto de fusión para restablecer los archivos conflictivos a un estado que se sabe que es adecuado.
+
+Resumen
+Los conflictos de fusión pueden ser una experiencia intimidatoria. Por suerte, Git ofrece herramientas potentes para ayudar a navegar y resolver conflictos. Git puede ocuparse de la mayoría de las fusiones por sí mismo con funciones de fusión automáticas. Surge un conflicto cuando dos ramas independientes han editado la misma línea de un archivo o cuando un archivo se ha eliminado en una rama, pero editado en la otra. Lo más probable es que los conflictos se produzcan cuando se trabaja en un entorno de equipo.
+
+*Fuente: Atlassian Bitbucket. Link: https://www.atlassian.com/es/git/tutorials/using-branches/merge-conflicts
