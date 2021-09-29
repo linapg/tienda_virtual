@@ -11,32 +11,52 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:admin@localhost:5
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'some-secret-key'
 
-db =  SQLAlchemy(app) #definimos la base de datos
+#definimos la base de datos
+db =  SQLAlchemy(app) 
 
 #Importar los modelos
 from models import Shopowner, Product
+
 
 #crear el esquema de la base de datos
 db.create_all()
 db.session.commit()
 
+#rutas
 @app.route('/')
 def hello():
-    return render_template("index.html")
-
-#por defecto, el método http que python interpreta, es GET
-#por eso es que en el terminal sale el verbo GET al momento de iniciar flask y hacer el request
+    return "hello"
 
 
-#rutas de páginas
+@app.route('/register')
+def register():
+    return render_template("signup.html")
 
-@app.route('/signup')
-def signup():
-    return "Esta es la página de registro, donde el tendero puede registrarse o iniciar sesión"
-
-@app.route('/profile')
+@app.route('/profile', methods=['POST'])
 def profile():
-    return "Esta es el página para el perfil con los datos del tendero y la tienda"
+    request_data = request.form
+    name = request_data["Nombres"]
+    last_name = request_data["Apellidos"]
+    email = request_data["Email"]
+    password = request_data["Contraseña"]
+    store_type = request_data["Tipo de tienda"]
+    
+    shopowner = Shopowner(name, last_name, email, password, store_type)
+    db.session.add(shopowner)
+    db.session.commit()
+    
+    print("Nombre:" + name)
+    print("Apellido:" + last_name)
+    print("Email:" + email)
+    print("Contraseña:" + password)
+    print("Tipo de tienda:" + store_type)
+    
+    return "Usuario creado"
+
+@app.route('/login')
+def signup():
+    return "ingreso al perfil"
+
 
 @app.route('/inventory')
 def inventory():
@@ -56,11 +76,9 @@ def orders():
 
 
 
-#rutas de otras acciones
-# decorador "@" - agregar funcionalidad extra a un métodoo o función
 
-
-#INFORMACIÓN DE REGISTRO DEL TENDERO
+#INFORMACIÓN DE REGISTRO DEL TENDERO 
+"""Las siguientes rutas ejemplifican GET y POST, agregando los datos MANUALMENTE a la DB!!!!!! """
 
 @app.route('/shop_owner', methods=['GET','POST'])
 def crud_shopowner():
@@ -104,7 +122,10 @@ def update_shopowner():
     return "actualización exitosa"
 
 
+
+
 # INFORMACIÓN DE REGISTRO DE PRODUCTO PRODUCTO
+"""Las siguientes rutas ejemplifican GET y POST, agregando los datos MANUALMENTE a la DB!!!!!! """
 
 @app.route('/product', methods=['GET','POST'])
 def crud_product():
@@ -126,13 +147,17 @@ def crud_product():
     elif request.method == 'POST':
         # Registrar una cancion
         request_data = request.form
-        id = request_data['id de producto']
-        product = request_data['producto']
+        product = request_data['product']
+        category = request_data['category']
+        unit = request_data['unit']
+        unit_price = request_data['unit_price']
 
         print("Producto:" + product)
-        print("Precio total:" + total_price)
+        print("Categoría:" + category)
+        print("Unidad de producto:" + unit)
+        print("Precio unidad:" + unit_price)
 
-        # Insertar en la base de datos la canción
+        # Insertar en la base de datos el producto
         return 'Se registro el producto exitosamente'
 
 
