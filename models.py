@@ -63,3 +63,5 @@ class Inventory(db.Model):
         self.bare_minimum = bare_minimum
         self.unit_cost = unit_cost
         self.total_inventory_cost = total_inventory_cost
+        
+        
