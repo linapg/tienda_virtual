@@ -1,0 +1,102 @@
+Una de las mayores ventajas de trabajar con git como control de versiones es poder crear ramas y experimentar con ellas sin tener la preocupación de dañar nuestro código o cuando estamos trabajando y de repente surge un imprevisto podemos crear una rama y arreglar el problema, eso sin tocar lo que estábamos haciendo. Pero ¿Cómo unimos lo que hicimos en otras ramas a la rama principal?
+
+Hacer git merge en un repositorio es integrar o fusionar las líneas de código de commits de una rama con otra. Éste es uno de los comandos básicos que usamos en nuestro día a día con git. Vamos a profundizar un poco en las opciones que tenemos disponibles con él.
+
+
+En la entrada Sistema de ramificaciones con git  ya conocimos como crear y trabajar con ramas y vimos los pasos básicos que se deben seguir:
+
+Creamos una rama basada en otra
+Trabajamos en la nueva rama
+Guardamos los cambios
+Nos ubicamos en la rama que queremos unir los cambios
+Fusionamos los cambios
+O lo que es lo mismo:
+
+git checkout -b feature
+Realizamos los cambios pertinentes
+git commit -m “feature realizada”
+git checkout master
+git merge feature
+También podemos hacer un sexto paso que es la eliminación de la rama que fusionamos pues ya no la necesitamos. Esto se hace con: git branch -d rama-a-eliminar, es decir, para nuestro caso: git branch -d feature.
+
+Ahora, después que el merge se realiza con éxito en nuestro repositorio puede darse dos posibles casos: un fast-forward merge (merge de avance rápido) o un 3-way merge (merge a tres bandas).
+
+Un fast-forward merge es cuando al momento de hacer merge con la rama master no se ha añadido ningún commit luego de crear la rama feature, es decir que el HEAD de master es el antepasado de la rama feature. Por tanto, en este caso no se genera un nuevo commit para agregar los commits de la rama de feature, en vez de ello, el HEAD de master se actualiza al HEAD de la rama feature, sin crear un commit de merge adicional, de allí su nombre, fast-forward o avance rápido, como se muestra en la imagen:
+
+fast-forward-merge
+
+Pero si realmente queremos que se genere un commit al hacer merge para documentar o dejar constancia que se hizo merge de otra rama en master debemos usar la opción --no-ff, es decir
+
+git merge --no-ff feature
+Quedando la rama master de esta manera:
+
+git-merge-no-ff
+
+Por otro lado, si la rama master ha divergido después de haber creado la rama feature ya no es posible un fast-forward merge, debido a que el commit de la rama donde actualmente se está (master) no es un antepasado directo de la rama a fusionar (feature) por tanto, git realiza un merge a tres bandas, es decir, que genera un commit para fusionar las dos ramas, tomando en cuenta el HEAD de cada una de ellas y el antepasado común de las dos:
+
+3-way-merge
+
+Resolviendo conflictos
+Algunas veces la unión de dos ramas no resulta tan bien, sino que ocurre un conflicto, esto cuando los commits de la rama a fusionar y la rama actual modifican la misma parte en un archivo en particular y git no puede decidir cuál versión elegir, y te avisa que tu debes resolverlo. Por ejemplo:
+
+Supongamos que un directorio tenemos un archivo index.html con el siguiente contenido:
+
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Titulo</title>
+  </head>
+  <body>
+    <p>Contenido de la web</p>
+  </body>
+</html>
+Inicializaremos en el un repositorio en el mismo haciendo git init y luego haremos nuestro primer commit con git add index.html y luego git commit -m “commit inicial”
+
+Vamos a crear una nueva rama para añadir algo de contenido:
+
+git checkout -b contenido
+Con ello ya estamos en la nueva rama y ahora vamos a cambiar el título.
+
+Guardamos los cambios y hacemos commit en esa rama
+
+git commit -a -m “cambios en el titulo”
+Nos movemos de nuevo a la rama master
+
+git checkout master
+Hacemos otros cambios en el archivo incluyendo el título y luego commit de los cambios
+
+git commit -a -m “se añade más contenido”
+Ahora intentamos hacer merge con la rama creada anteriormente
+
+git merge contenido
+En este caso no podrá hacer el merge y nos mostrará que hay un conflicto que no nos permitirá continuar hasta que se resuelva:
+
+Auto-merging index.html
+CONFLICT (content): Merge conflict in index.html
+Automatic merge failed; fix conflicts and then commit the result.
+Git no proporciona una ayuda diciéndonos que archivo tiene el conflicto, el cual al abrirlo nos muestra cuáles son los cambios tanto de una rama como de la otra:
+
+conflicto-con-git-merge
+
+donde tenemos que elegir entre lo que está entre <<<<<<< HEAD y ======= que es contenido que tenemos en la rama donde estamos haciendo el merge (master) o entre ======= y >>>>>>> contenido donde están los cambios hechos en la rama que queremos unir (contenido).
+
+Para ello arreglamos el archivo con los cambios elegidos, guardamos, agregamos y hacemos commit de los cambios
+
+git commit -a
+y de esta manera logramos hacer merge con éxito.
+
+Otra manera para resolver los conflictos es que podemos indicarle de antemano a git que estrategia tomar cuando tiene que decidir un conflicto, esto con las opciones ours y theirs, de esta manera:
+
+git merge -s recursive -X theirs rama-a-fusionar
+Esto cuando queremos que git resuelva el conflicto usando los cambios de la rama a fusionar (theirs o suyos) y cuando queremos que tome los cambios de la rama donde se está fusionando (ours o nuestros): 
+
+git merge -s recursive -X ours rama-a-fusionar
+Deshaciendo merges
+Si hemos realizado un merge con una rama con la que no queríamos, puedes hacer:
+
+git reset --merge ORIG_HEAD
+Unir automáticamente múltiples commits en uno durante el merge
+Se puede unir todos los commits de una rama y fusionarlos en la rama actual especificando la opción --squash, es decir,
+
+git merge --squash rama-a-fusionar
+Merge es una de las alternativas que nos da git para unir las ramas de nuestro repositorio pero no es la única; en la próxima entrega conoceremos a rebase y su diferencia con merge.
