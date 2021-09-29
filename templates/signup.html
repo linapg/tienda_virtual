@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <h1>Registro</h1>
+    <form action="{{url_for('profile')}}" method="post" enctype="multipart/form-data">
+        <h5>Ingrese sus datos para crear su usuario </h5>
+        <div>
+            <input type="text" name="Nombres" placeholder="Escriba su nombre aquí">
+        </div>
+
+        <div>
+            <input type="text" name="Apellidos" placeholder="Escriba sus apellidos">
+        </div>
+
+        <div>
+            <input type="text" name="Email" placeholder="Escriba su email">
+        </div>
+
+        <div>
+            <input type="text" name="Contraseña">
+        </div>
+
+        <div>
+            <input type="text" name="Tipo de tienda" placeholder="Escriba el tipo de tienda que tiene">
+        </div>
+
+        <div>
+            <input type="submit" value = "Submit">
+        </div>
+    </form>
+</body>
+</html>
