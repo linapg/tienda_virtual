@@ -8,7 +8,8 @@ app = Flask(__name__)
 #buena práctica es crear un archivo config.py con esta configuración, pero puede ir aquí también
 #'postgresql://<usuario>:<contraseña>@<direccion de la db>:<puerto>/<nombre de la db>
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:admin@localhost:5433/tiendavirtualdb'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:pololo@localhost:5432/tiendavirtualdb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://hpxwwhitjtynjd:fad084c3db4bf0573bdc0d5e20d54fe0709408c629e9e43fca9c4eeefe3bf859@ec2-54-174-172-218.compute-1.amazonaws.com:5432/dchtn7qs3oiffk'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'some-secret-key'
 
