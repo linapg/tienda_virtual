@@ -161,6 +161,7 @@ def crud_product():
         # Insertar en la base de datos el producto
         return 'Se registro el producto exitosamente'
 
-
+if __name__ == "__main__":
+    app.run()
 
 
