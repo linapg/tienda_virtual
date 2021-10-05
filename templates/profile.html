@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="text-align:center;">
+
+    <form action="{{url_for('profile')}}" method="post" enctype="multipart/form-data">
+
+        <div style="text-align:center;">
+            <img src="https://www.loquequierasya.com/wp-content/uploads/2011/07/Vender-en-Internet-1024x480.jpg" alt="HTML5 Icon" style="width: 50%; height: 50%"><br>
+            <small>Foto tomada de Geniux: <a href="https://bit.ly/3l58ff2" title="E-Commerce: ">www.geniux.com.co</a></small>
+        </div>
+        <br>
+        <div>
+        <h1 style="margin-bottom: 10px;">Su perfil de usuario</h1>
+            <h2 style="margin-bottom: 10px;">Datos personales</h2>
+        </div>
+
+
+        <div> 
+            <p>
+                <b>Nombre: </b> {{name}}
+                <b>Apellidos: </b> {{last_name}}
+                <b>Email: </b>{{email}}
+                <b>Tipo de tienda: </b> {{store_type}}
+            </p>
+        </div>
+
+
+</body>
+</html>

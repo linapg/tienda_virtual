@@ -26,13 +26,14 @@ class Product(db.Model):
     category = db.Column(db.String)
     unit = db.Column(db.String)
     unit_price= db.Column(db.Integer)
-    
-    def __init__(self,id,product,category,unit,unit_price):
-        self.id = id
+    shopowner_id = db.Column(db.ForeignKey("Shop Owner.id")) # <-- Añadido 04.10
+
+    def __init__(self,product,category,unit,unit_price,shopowner_id):
         self.product = product
         self.category = category
         self.unit = unit
         self.unit_price = unit_price
+        self.shopowner_id = shopowner_id 
 
 class Inventory(db.Model):
     __tablename__ = 'Inventory'

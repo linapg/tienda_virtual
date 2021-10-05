@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="text-align:center;">
+
+    <div style="text-align:center;">
+        <img src="https://www.prevent.es/Files/HtmlCustom/Documentos/registro%20rgpd.jpg" alt="HTML5 Icon"><br>
+        <small>Foto tomada de Event Security: <a href="https://bit.ly/3l58ff2" title="Event Security: ">www.prevent.es</a></small>
+    </div>
+
+    <div>
+        <h1 style="margin-bottom: 10px;">Inicio de sesión</h1>
+    </div>
+
+    <form action="{{url_for('check_user')}}" method="post" enctype="multipart/form-data">
+        <h2 style="margin-bottom: 10px;">Ingrese sus datos de usuario para acceder a su perfil</h2>
+
+        <div style="margin-bottom: 13px;">
+            <p style="font-family:Optima;">
+            <b>Email:</b><br>
+            <input type="text" name="Email" placeholder="Escriba su email aquí">
+            </p>
+        </div>
+        
+        <div style="margin-bottom: 13px;">     
+            <p style="font-family:Optima;"></p>          
+            <b>Contraseña:</b><br>
+            <input type="password" name="Contraseña" placeholder="Escriba su contraseña">
+            </p>
+        </div>
+
+        <div style="margin-bottom: 13px;">
+            <input type="submit" value = "Aceptar y enviar">
+        </div>
+    </form>
+
+        <br>
+        <br>
+        <div style="text-align:center; background-color:powderblue;">
+            <small><b>Créditos:</b><br>
+            - Esteban Sierra Gayón y Lina Pérez González - Grupo 3 - <br>
+            - Desarrollo Web - Profesor Ciro Gamboa - MisionTIC2022 - <br>
+            &#128512;
+        </small>
+        </div>
+
+</body>
+</html>
