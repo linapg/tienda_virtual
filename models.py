@@ -9,7 +9,8 @@ class Shopowner(db.Model):
     last_name = db.Column(db.String(50))
     email = db.Column(db.String(50))
     password = db.Column(db.String(50), nullable=True)
-    store_type = db.Column(db.String, nullable=True)
+    store_type = db.Column(db.String)
+    
 
     def __init__(self,name,last_name,email,password,store_type):
         self.name = name
@@ -26,6 +27,8 @@ class Product(db.Model):
     category = db.Column(db.String)
     unit = db.Column(db.String)
     unit_price= db.Column(db.Integer)
+    shopowner_id = db.Column(db.ForeignKey("Shopowner.id")) #Añadido 04.10
+
     
     def __init__(self,id,product,category,unit,unit_price):
         self.id = id
