@@ -5,33 +5,112 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
-    <h1>Registro</h1>
-    <form action="{{url_for('profile')}}" method="post" enctype="multipart/form-data">
-        <h5>Ingrese sus datos para crear su usuario </h5>
-        <div>
-            <input type="text" name="Nombres" placeholder="Escriba su nombre aquí">
-        </div>
 
-        <div>
+<body style="text-align:center;">
+
+    <div style="text-align:center;">
+        <img src="https://www.prevent.es/Files/HtmlCustom/Documentos/registro%20rgpd.jpg" alt="HTML5 Icon"><br>
+        <small>Foto tomada de Event Security: <a href="https://bit.ly/3l58ff2" title="Event Security: ">www.prevent.es</a></small>
+    </div>
+
+    <div>
+        <h1 style="margin-bottom: 10px;">Registro</h1>
+    </div>
+    
+    <form action="{{url_for('create_user')}}" method="post" enctype="multipart/form-data">
+        <h2 style="margin-bottom: 10px;">Ingrese sus datos para crear su usuario</h2>
+
+        <div style="margin-bottom: 13px;">
+            <p style="font-family:Optima;">
+            <b>Nombres:</b><br>
+            <input type="text" name="Nombres" placeholder="Escriba su(s) nombre(s) aquí">
+            </p>
+        </div>
+        
+        <div style="margin-bottom: 13px;">     
+            <p style="font-family:Optima;"></p>          
+            <b>Apellidos:</b><br>
             <input type="text" name="Apellidos" placeholder="Escriba sus apellidos">
+            </p>
         </div>
 
-        <div>
+        <div style="margin-bottom: 13px;">
+            <p style="font-family:Optima;">
+            <b>Email:</b><br>
             <input type="text" name="Email" placeholder="Escriba su email">
+            </p>
         </div>
 
-        <div>
-            <input type="text" name="Contraseña">
+        <div style="margin-bottom: 13px;">
+            <p style="font-family:Optima;">
+            <b>Contraseña:</b><br>
+            <input type="password" name="Contraseña" placeholder="Escriba su contraseña">
+            </p>
         </div>
 
-        <div>
-            <input type="text" name="Tipo de tienda" placeholder="Escriba el tipo de tienda que tiene">
+        <div style="font-family:Optima; margin-bottom: 13px;">
+        <b>Tipo de tienda:</b><br>
+
+        <input type="radio" id="Supermercado" name="Tipo de tienda" value="Supermercado">
+        <label for="Supermercado">Supermercado</label><br>
+
+        <input type="radio" id="Víveres" name="Tipo de tienda" value="Víveres">
+        <label for="Víveres">Víveres</label><br>
+
+        <input type="radio" id="Miscelánea" name="Tipo de tienda" value="Miscelánea">
+        <label for="Miscelánea">Miscelánea</label><br>
+
+        <input type="radio" id="Carnicería/Salsamentaria" name="Tipo de tienda" value="Carnicería/Salsamentaria">
+        <label for="Carnicería/Salsamentaria">Carnicería/Salsamentaria</label><br>
+
+        <input type="radio" id="Panadería" name="Tipo de tienda" value="Panadería">
+        <label for="Panadería">Panadería</label><br>
+
+        <input type="radio" id="Heladería" name="Tipo de tienda" value="Heladería">
+        <label for="Heladería">Heladería</label><br>
+
+        <input type="radio" id="Papelería/Pastelería" name="Tipo de tienda" value="Papelería">
+        <label for="Papelería">Papelería</label><br>
+
+        <input type="radio" id="Droguería" name="Tipo de tienda" value="Droguería">
+        <label for="Droguería">Droguería</label><br>
+
+        <input type="radio" id="Tienda para Mascotas" name="Tipo de tienda" value="Tienda para Mascotas">
+        <label for="Tienda para Mascotas">Tienda para Mascotas</label><br>
+
+        <input type="radio" id="Tienda de ropa" name="Tipo de tienda" value="Tienda de ropa">
+        <label for="Tienda de ropa">Tienda de ropa</label><br>
+
+        <input type="radio" id="Productos Cosméticos" name="Tipo de tienda" value="Productos Cosméticos">
+        <label for="Productos Cosméticos">Productos Cosméticos</label><br>
+
+        <input type="radio" id="Floristería/Detalles" name="Tipo de tienda" value="Floristería/Detalles">
+        <label for="Floristería/Detalles">Floristería/Detalles</label><br>
         </div>
 
-        <div>
-            <input type="submit" value = "Submit">
+        <div style="margin-bottom: 13px;">
+            <p><strong>Por favor lea los términos y condiciones del servicio:</strong><br>
+            <small>Al marcar la opción "Acepto las Condiciones de uso" usted está de acuerdo en aceptar los siguientes términos y condiciones ("Condiciones de uso"). 
+                Cualquier nueva característica o herramienta que pueda añadirse al actual servicio estarán también sujetas a los términos y condiciones de uso.
+                Usted debe saber que cuando crea una tienda virtual dentro del sistema mitiendavirtual.com, usted es responsable del funcionamiento de la tienda virtual que 
+                ha creado, así como de los datos que ha introducido, de las operaciones de compraventa que se realicen y del manejo de los datos personales de los compradores 
+                registrados en su tienda virtual.</small><br>
+            </p>
+        </div>
+
+        <div style="margin-bottom: 13px;">
+            <input type="submit" value = "Aceptar y enviar">
         </div>
     </form>
+
+        <br>
+        <br>
+        <div style="text-align:center; background-color:powderblue;">
+            <small><b>Créditos:</b><br>
+            - Esteban Sierra Gayón y Lina Pérez González - Grupo 3 - <br>
+            - Desarrollo Web - Profesor Ciro Gamboa - MisionTIC2022 - <br>
+            &#128512;
+        </small>
+        </div>
 </body>
 </html>
