@@ -122,6 +122,12 @@ def check_user():
         return render_template("login.html")
 
 
+#PRUEBA PARA CSS
+@app.route('/prueba')
+def prueba():
+    return render_template("pruebacss.html")
+
+
 """------------------------------------------------------------------ 
 Las rutas definidas a continuación están previstas para desarrollo posterior
 
