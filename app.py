@@ -1,6 +1,6 @@
 """Este es el desarrollo del Backend para la estructura de mitiendavirtual.com"""
 
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy # ayuda a llevar de python a SQL
 
 app = Flask(__name__)
@@ -55,11 +55,16 @@ def create_user():
     db.session.add(shopowner)
     db.session.commit()
     
+    #diccionario volatil del servidor - sirve para uso de info en varios endpoints
+    session['user_id'] =shopowner.id
+    
     print("Nombre:" + name)
     print("Apellido:" + last_name)
     print("Email:" + email)
     print("Contraseña:" + password)
     print("Tipo de tienda:" + store_type)
+    print(session['user_id'])
+    
     
     #id = shopowner.id
 
@@ -68,9 +73,9 @@ def create_user():
 
 # REGISTRO DE INVENTARIO Y PRODUCTOS EN PROCESO DE ELABORACIÓN
 #Ruta para registro de inventario
-@app.route('/register_inventory/<user>') #revisar con Rubén <----------------------------
-def register_inventory(user):
-    return render_template("inventory.html", user=user)
+@app.route('/register_inventory') #revisar con Rubén <----------------------------
+def register_inventory():
+    return render_template("inventory.html")
 
 #Registro de productos al inventario
 @app.route('/product', methods=['POST'])
@@ -80,18 +85,20 @@ def product():
     category = request_data['Categoría']
     unit = request_data['Unidad']
     unit_price = request_data['Precio unidad']
-    shopowner_id=Shopowner.query.filter(Shopowner.id)
-
+    #shopowner_id=Shopowner.query.filter(Shopowner.id)
+    #print(shopowner_id)
+    shopowner_id = session['user_id']
     
     entry = Product(product,category,unit,unit_price,shopowner_id)
     db.session.add(entry)
     db.session.commit()
-
+    
+    print("id usuario" + str(session['user_id']))
     print("Producto:" + product)
     print("Categoría:" + category)
     print("Unidad de producto:" + unit)
     print("Precio unidad:" + unit_price)
-    print("ID Tendero:" + shopowner_id)
+    print("ID Tendero:" + str(shopowner_id))
 
 
     return 'Se registró el producto exitosamente'
@@ -116,16 +123,32 @@ def check_user():
 
     try:
         if(user[0] is not None):
+            session['user_id'] =user[0].id
+
             return render_template("inventory.html")
 
     except:
         return render_template("login.html")
+    
+#Ruta para login
+@app.route('/perfil')
+def perfil():
+    user=Shopowner.query.get(session['user_id'])
 
+    return render_template("profile.html", data_user=user)
+
+#RUTA CERRAR SESIÓN
+#session.pop('user_id', None)
 
 #PRUEBA PARA CSS
 @app.route('/prueba')
 def prueba():
     return render_template("pruebacss.html")
+
+#PRUEBA PARA PERFIL.HTML
+@app.route('/perfilhtml')
+def perfilhtml():
+    return render_template("profile.html")
 
 
 """------------------------------------------------------------------ 

@@ -1,8 +1,7 @@
 from app import db
 
-# Tabla Tendero
 class Shopowner(db.Model):
-    __tablename__ = 'Shop Owner'
+    __tablename__ = 'Shopowner'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50))
@@ -22,11 +21,11 @@ class Product(db.Model):
     __tablename__ = 'Product'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    product = db.Column(db.String, unique=True)
+    product = db.Column(db.String, unique=False)
     category = db.Column(db.String)
     unit = db.Column(db.String)
     unit_price= db.Column(db.Integer)
-    shopowner_id = db.Column(db.ForeignKey("Shop Owner.id")) # <-- Añadido 04.10
+    shopowner_id = db.Column(db.ForeignKey("Shopowner.id")) # <-- Añadido 04.10
 
     def __init__(self,product,category,unit,unit_price,shopowner_id):
         self.product = product
@@ -65,4 +64,4 @@ class Inventory(db.Model):
         self.unit_cost = unit_cost
         self.total_inventory_cost = total_inventory_cost
         
-        
+#PENDIENTE:    FLUJO CONTABLE - FACTURAS - DEUDORES - PRODUCTO EN FACTURA      

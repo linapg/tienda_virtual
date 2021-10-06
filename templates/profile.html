@@ -8,8 +8,6 @@
 
 <body style="text-align:center;">
 
-    <form action="{{url_for('profile')}}" method="post" enctype="multipart/form-data">
-
         <div style="text-align:center;">
             <img src="https://www.cocoschool.com/wp-content/uploads/perfiles-redes-sociales.png" alt="HTML5 Icon" style="width: 50%; height: 50%"><br>
         </div>
@@ -22,10 +20,10 @@
 
         <div> 
             <p>
-                <b>Nombre: </b> {{name}}
-                <b>Apellidos: </b> {{last_name}}
-                <b>Email: </b>{{email}}
-                <b>Tipo de tienda: </b> {{store_type}}
+                <b>Nombre: </b> {{data_user.name}}
+                <b>Apellidos: </b> {{data_user.last_name}}
+                <b>Email: </b>{{data_user.email}}
+                <b>Tipo de tienda: </b> {{data_user.store_type}}
             </p>
         </div>
 
