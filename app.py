@@ -5,17 +5,18 @@ from flask_sqlalchemy import SQLAlchemy # ayuda a llevar de python a SQL
 
 app = Flask(__name__)
 
-#Configuración de base de datos 
+#----------------< Configuración de base de datos >------------------
+
 #'postgresql://<usuario>:<contraseña>@<direccion de la db>:<puerto>/<nombre de la db>
 
 #DB de ESTEBAN
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:pololo@localhost:5432/tiendavirtualdb'
 
 #DB HEROKU
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://hpxwwhitjtynjd:fad084c3db4bf0573bdc0d5e20d54fe0709408c629e9e43fca9c4eeefe3bf859@ec2-54-174-172-218.compute-1.amazonaws.com:5432/dchtn7qs3oiffk'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://hpxwwhitjtynjd:fad084c3db4bf0573bdc0d5e20d54fe0709408c629e9e43fca9c4eeefe3bf859@ec2-54-174-172-218.compute-1.amazonaws.com:5432/dchtn7qs3oiffk'
 
 #DB de LINA
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:admin@localhost:5433/tiendavirtualdb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:admin@localhost:5433/tiendavirtualdb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'some-secret-key'
 
@@ -29,19 +30,23 @@ from models import Shopowner, Product
 db.create_all()
 db.session.commit()
 
-#Creamos las diferentes rutas
+
+#-------------< Rutas >------------------------
+
+# ---< Rutas para el usuario >---
+
 
 #Ruta para el home
 @app.route('/')
 def hello():
     return render_template("home.html")
 
-#Ruta para el registro de usuario nuevo (tendero)
+#Ruta para el formulario de registro de usuario nuevo
 @app.route('/register')
 def register():
     return render_template("signup.html")
 
-#Registro de usuario en la base de datos
+#Registro de usuario en la base de datos - CRUD
 @app.route('/create_user', methods=['POST'])
 def create_user():
     request_data = request.form
@@ -64,20 +69,60 @@ def create_user():
     print("Contraseña:" + password)
     print("Tipo de tienda:" + store_type)
     print(session['user_id'])
+
+    return redirect(url_for('profile'))
+
+#Ruta para login
+@app.route('/perfil')
+def perfil():
+    user=Shopowner.query.get(session['user_id'])
+
+    return render_template("profile.html", data_user=user)
+
+# Ruta de logueo de usuario
+@app.route('/check_user', methods=['POST'])
+def check_user():
+    request_data = request.form
+    email = request_data["Email"]
+    password = request_data["Contraseña"]
+    user=Shopowner.query.filter(Shopowner.password==password,Shopowner.email==email)
+
+    try:
+        if(user[0] is not None):
+            session['user_id'] =user[0].id
+            return render_template("profile.html")
+
+    except:
+        return render_template("login.html")
     
-    
-    #id = shopowner.id
 
-    return redirect(url_for('register_inventory'))
+#Ruta para mostrar el perfil del usuario
+@app.route('/perfilhtml')
+def perfilhtml():
+    return render_template("profile.html")
+
+#Ruta para modificación de datos personales del usuario (por ahora está manual - falta desarrollo con HTML y POST)
+@app.route('/update_shopowner')
+def update_shopowner():
+    old_name = "María"
+    new_name = "José"
+    old_song = Shopowner.query.filter_by(name=old_name).first()
+    old_song.name = new_name
+    db.session.commit()
+    return "actualización exitosa"
+
+#RUTA CERRAR SESIÓN
+#session.pop('user_id', None)
+
+# ---< Rutas para productos e inventario >--
 
 
-# REGISTRO DE INVENTARIO Y PRODUCTOS EN PROCESO DE ELABORACIÓN
-#Ruta para registro de inventario
-@app.route('/register_inventory') #revisar con Rubén <----------------------------
-def register_inventory():
-    return render_template("inventory.html")
+#Ruta para registro de productos
+@app.route('/register_product') 
+def register_product():
+    return render_template("register_product.html")
 
-#Registro de productos al inventario
+#Registro de productos en el inventario - CRUD
 @app.route('/product', methods=['POST'])
 def product():
     request_data = request.form
@@ -101,78 +146,16 @@ def product():
     print("ID Tendero:" + str(shopowner_id))
 
 
-    return 'Se registró el producto exitosamente'
+    return render_template("inventory.html")
     
 #Ruta para ver el inventario
 @app.route('/inventory')
 def inventory():
-    return "Esta es la página que muestra el inventario de la tienda"
-
-# Ruta para ingresar el usuario
-@app.route('/login')
-def login():
-    return render_template("login.html")
-
-# Ruta de logueo de usuario
-@app.route('/check_user', methods=['POST'])
-def check_user():
-    request_data = request.form
-    email = request_data["Email"]
-    password = request_data["Contraseña"]
-    user=Shopowner.query.filter(Shopowner.password==password,Shopowner.email==email)
-
-    try:
-        if(user[0] is not None):
-            session['user_id'] =user[0].id
-
-            return render_template("inventory.html")
-
-    except:
-        return render_template("login.html")
-    
-#Ruta para login
-@app.route('/perfil')
-def perfil():
-    user=Shopowner.query.get(session['user_id'])
-
-    return render_template("profile.html", data_user=user)
-
-#RUTA CERRAR SESIÓN
-#session.pop('user_id', None)
-
-#PRUEBA PARA CSS
-@app.route('/prueba')
-def prueba():
-    return render_template("pruebacss.html")
-
-#PRUEBA PARA PERFIL.HTML
-@app.route('/perfilhtml')
-def perfilhtml():
-    return render_template("profile.html")
+    return render_template("inventory.html")
 
 
-"""------------------------------------------------------------------ 
-Las rutas definidas a continuación están previstas para desarrollo posterior
+# ---< Otras rutas a desarrollar si hay tiempo >--
 
-#Ruta para mostrar el perfil del nuevo usuario
-@app.route('/profile/<users>')
-def profile(users):
-    return render_template("profile.html", users=users)
-    
-#Ruta para modificación de datos personales del usuario (por ahora está manual - falta desarrollo con HTML y POST)
-@app.route('/update_shopowner')
-def update_shopowner():
-    old_name = "María"
-    new_name = "José"
-    old_song = Shopowner.query.filter_by(name=old_name).first()
-    old_song.name = new_name
-    db.session.commit()
-    return "actualización exitosa"
-
-#Ruta para login
-@app.route('/login/<user>')
-def login(user):
-    return render_template("profile.html", user=user)
 
 @app.route('/accounting_flow')
 def utilities():
@@ -185,8 +168,14 @@ def alerts():
 @app.route('/invoices')
 def orders():
     return "Esta es la página que permite registrar facturas y deudores"
---------------------------------------------------------------------------"""
 
+
+
+# ---< Rutas para prueba de CSS >--
+
+@app.route('/prueba')
+def prueba():
+    return render_template("pruebacss.html")
 
 if __name__ == "__main__":
     app.run()

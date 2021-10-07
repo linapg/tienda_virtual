@@ -1,0 +1,36 @@
+home
+
+    registro 
+        inicio sesión
+            Centro de Control
+                productos   
+                    lista
+                    ingreso de productos
+                    volver al centro de control
+                inventario general
+                datos personales 
+                    editar datos personales
+                cerrar sesión
+
+                (OPCIONES A DESARROLLAR SI HAY TIEMPO)
+                Ver facturas (lista)
+                Ver deudores (lista)
+                Flujo contable
+
+                
+
+    inicio sesión
+        Centro de Control
+            productos   
+                lista
+                ingreso de productos
+                volver al centro de control
+            inventario general
+            datos personales 
+                editar datos personales
+            cerrar sesión
+
+            (OPCIONES A DESARROLLAR SI HAY TIEMPO)
+            Ver facturas (lista)
+            Ver deudores (lista)
+            Flujo contable
