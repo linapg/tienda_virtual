@@ -173,10 +173,11 @@ def orders():
 
 # ---< Rutas para prueba de CSS >--
 
+"""
 @app.route('/prueba')
 def prueba():
     return render_template("pruebacss.html")
-
+"""
 if __name__ == "__main__":
     app.run()
 
