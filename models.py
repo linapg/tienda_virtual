@@ -63,4 +63,65 @@ class Inventory(db.Model):
         self.unit_cost = unit_cost
         self.total_inventory_cost = total_inventory_cost
         
-#PENDIENTE:    FLUJO CONTABLE - FACTURAS - DEUDORES - PRODUCTO EN FACTURA      
+
+class AccountingFlow(db.Model):
+    __tablename__ = 'AccountingFlow'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    date = db.Column(db.DateTime)
+    total_sales = db.Column(db.Integer)
+    cost_of_sale = db.Column(db.Integer)
+    expenses = db.Column(db.Integer)
+    taxes = db.Column(db.Integer)
+    profits = db.Column(db.Integer)
+
+    def __init__(self, date, total_sales, cost_of_sale, expenses, taxes, profits):
+        self.date = date
+        self.total_sales = total_sales
+        self.cost_of_sale = cost_of_sale
+        self.expenses = expenses
+        self.taxes = taxes
+        self.profits = profits
+
+class Invoice(db.Model):
+    __tablename__ = 'Invoice'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    date = db.Column(db.DateTime)
+    product_id = db.Column(db.ForeignKey("Product.id"))
+    q_sold = db.Column(db.Integer)
+    payment_meth = db.Column(db.String)
+    tot_sales = db.Column(db.Integer)
+    def __init__(self, date, product_id, q_sold, payment_meth, tot_sales):
+        self.date = date
+        self.product_id = product_id
+        self.q_sold = q_sold
+        self.payment_meth = payment_meth
+        self.tot_sales = tot_sales
+
+class ProductInvoice(db.Model):
+    __tablename__ = 'ProductInvoice'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    product_id = db.Column(db.ForeignKey("Product.id"))
+    invoice_id = db.Column(db.ForeignKey("Invoice.id"))
+    def __init__(self, product_id, invoice_id):
+        self.product_id = product_id
+        self.invoice_id = invoice_id
+
+class Receivables(db.Model):
+    __tablename__ = 'Receivables'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String)
+    address = db.Column(db.String)
+    phone = db.Column(db.Integer)
+    email = db.Column(db.Integer, unique=True)
+    invoice_id = db.Column(db.ForeignKey("Invoice.id"))
+    deadline = db.Column(db.DateTime)
+    def __init__(self, name, address, phone, email, invoice_id, deadline):
+        self.name = name
+        self.address = address
+        self.phone = phone
+        self.email = email
+        self.invoice_id = invoice_id
+        self.deadline = deadline
+
+
+
