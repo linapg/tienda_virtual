@@ -6,8 +6,8 @@ class Shopowner(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50))
     last_name = db.Column(db.String(50))
-    email = db.Column(db.String(50))
-    password = db.Column(db.String(50), nullable=True) # <-- Revisar si al cambiar aquí, hay que cambiar en Postgres también?
+    email = db.Column(db.String(50), unique=True)
+    password = db.Column(db.String(50)) # <-- Revisar si al cambiar aquí, hay que cambiar en Postgres también?
     store_type = db.Column(db.String, nullable=True)
 
     def __init__(self,name,last_name,email,password,store_type):
@@ -24,14 +24,12 @@ class Product(db.Model):
     product = db.Column(db.String, unique=False)
     category = db.Column(db.String)
     unit = db.Column(db.String)
-    unit_price= db.Column(db.Integer)
     shopowner_id = db.Column(db.ForeignKey("Shopowner.id")) # <-- Añadido 04.10
 
-    def __init__(self,product,category,unit,unit_price,shopowner_id):
+    def __init__(self,product,category,unit,shopowner_id):
         self.product = product
         self.category = category
         self.unit = unit
-        self.unit_price = unit_price
         self.shopowner_id = shopowner_id 
 
 class Inventory(db.Model):
@@ -40,28 +38,42 @@ class Inventory(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     date = db.Column(db.DateTime)
     product_id = db.Column(db.ForeignKey("Product.id"))
-    initial_inventory = db.Column(db.Integer)
-    shelves_quantity = db.Column(db.Integer, nullable=True) #no los usaremos ahora
-    shelves_minimun = db.Column(db.Integer, nullable=True) #no los usaremos ahora
-    entries = db.Column(db.Integer)
-    consumption = db.Column(db.Integer)
-    final_inventory = db.Column(db.Integer, nullable=True) #no los usaremos ahora
-    bare_minimum = db.Column(db.Integer, nullable=True) #no los usaremos ahora
-    unit_cost = db.Column(db.Integer)
-    total_inventory_cost = db.Column(db.Integer)
+    #las siguientes columnas no se están usando:
+    #initial_inventory = db.Column(db.Integer)
+    #shelves_quantity = db.Column(db.Integer, nullable=True) #no los usaremos ahora
+    #shelves_minimun = db.Column(db.Integer, nullable=True) #no los usaremos ahora
+    #entries = db.Column(db.Integer)
+    #consumption = db.Column(db.Integer)
+    #final_inventory = db.Column(db.Integer, nullable=True) #no los usaremos ahora
+    #bare_minimum = db.Column(db.Integer, nullable=True) #no los usaremos ahora
     
-    def __init__(self,date,product_id,initial_inventory,shelves_quantity,shelves_minimun,entries,consumption,final_inventory,bare_minimum,unit_cost,total_inventory_cost):
+    entry = db.Column(db.Integer)
+    unit_cost = db.Column(db.Integer)
+    total_quantity = db.Column(db.Integer)
+    total_inventory_cost = db.Column(db.Integer)
+    selling_price = db.Column(db.Integer)
+    profit_per_unit = db.Column(db.Integer)
+    total_profit = db.Column(db.Integer)
+    supplier = db.Column(db.String)
+    
+    def __init__(self,date,product_id,entry,unit_cost,total_quantity,total_inventory_cost,selling_price,profit_per_unit,total_profit,supplier):
         self.date = date
         self.product_id = product_id
-        self.initial_inventory = initial_inventory
-        self.shelves_quantity = shelves_quantity
-        self.shelves_minimun = shelves_minimun
-        self.entries = entries
-        self.consumption = consumption
-        self.final_inventory = final_inventory
-        self.bare_minimum = bare_minimum
+        #self.initial_inventory = initial_inventory
+        #self.shelves_quantity = shelves_quantity
+        #self.shelves_minimun = shelves_minimun
+        #self.entries = entries
+        #self.consumption = consumption
+        #self.final_inventory = final_inventory
+        #self.bare_minimum = bare_minimum
+        self.entry = entry
         self.unit_cost = unit_cost
+        self.total_quantity = total_quantity
         self.total_inventory_cost = total_inventory_cost
+        self.selling_price = selling_price
+        self.profit_per_unit = profit_per_unit
+        self.total_profit = total_profit
+        self.supplier = supplier
         
 
 class AccountingFlow(db.Model):

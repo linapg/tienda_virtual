@@ -9,25 +9,53 @@
 <body style="text-align:center;">
 
         <div>
-            <img src="https://www.cocoschool.com/wp-content/uploads/perfiles-redes-sociales.png" alt="HTML5 Icon" style="width: 50%; height: 50%"><br>
+            <img src="https://globaledgeme.com/wp-content/uploads/2020/04/Inventory-Management-02.png" alt="HTML5 Icon" width="50%"; height="50%"/><br>
         </div>
         <br>
         <div style="margin-bottom: 10px;">
-            <h1>Bienvenido {{data_user.name}}!</h1>
+            <h1>Bienvenido {{user.name}}!</h1>
             <h2>Este es el centro de control de tu tienda virtual</h2>
             <p>Selecciona una de las siguientes opciones de navegación:</p>
         </div>
 
-        <div style="text-align:center; background-color:powderblue;">
+        <div style="margin-bottom: 10px; font-weight:bold">   
+            <form action="/register_product">
+                <button type="submit">Productos</button>
+            </form>
+            <br>
+            <form action="/inventory">
+                <button type="submit">Iventario general</button>
+            </form>
+            <br>
+            <form action="/profile">
+                <button type="submit">Datos Personales</button>
+            </form>
+            <br>
+            <form action="/invoices">
+                <button type="submit">Ver Facturas</button>
+            </form>
+            <br>
+            <form action="/debtors">
+                <button type="submit">Deudores</button>
+            </form>
+            <br>
+            <form action="/accounting_flow">
+                <button type="submit">Flujo contable</button>
+            </form>
+            <br>
+            <form action="/register_product">
+                <button type="submit">Cerrar sesión</button>
+            </form>
+            </div>
+            <br>
+        <div style="background-color:powderblue;">
             <small><b>Créditos:</b><br>
             - Esteban Sierra Gayón y Lina Pérez González - Grupo 3 - <br>
             - Desarrollo Web - Profesor Ciro Gamboa - MisionTIC2022 - <br>
             &#128512;
             <br>
-            Foto tomada de Coco School: <a href="https://www.cocoschool.com/" title="Perfil: ">www.cocoschool.com/</a>
+            Foto tomada de Amplifica digital: <a href="https://bit.ly/30bik21" title="Business Intelligence: ">www.amplificadigital.com.br</a>
         </small>
         </div>
-
-
 </body>
 </html>

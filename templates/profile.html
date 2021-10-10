@@ -6,40 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body style="text-align:center;">
-
-        <div>
-            <img src="https://www.cocoschool.com/wp-content/uploads/perfiles-redes-sociales.png" alt="HTML5 Icon" style="width: 50%; height: 50%"><br>
+<body style="margin-bottom: 10px; text-align:center; font-family:Optima;">
+        <div style="margin-bottom: 1px;">
+            <img src="https://image.freepik.com/vector-gratis/datos-personales-protegidos-ilustracion-isometrica-computadora-portatil-elementos-coloridos-blanco_1284-63284.jpg" alt="HTML5 Icon" width:"50%"; height:"50%"><br>
         </div>
-        <br>
-        <div style="margin-bottom: 10px;">
-            <h1>Hola {{data_user.name}}!</h1>
+        <div>
+            <h1>Hola {{user.name}}!</h1>
             <h2>Estos son tus datos personales:</h2>
         </div>
 
-        <div> 
+        <div style="margin-bottom: 10px;">
             <p>
-                <b>Nombre: </b> {{data_user.name}}
-                <b>Apellidos: </b> {{data_user.last_name}}
-                <b>Email: </b>{{data_user.email}}
-                <b>Tipo de tienda: </b> {{data_user.store_type}}
+                <b>Nombre: </b> {{user.name}} <br>
+                <b>Apellidos: </b> {{user.last_name}} <br>
+                <b>Email: </b>{{user.email}} <br>
+                <b>Tipo de tienda: </b> {{user.store_type}} <br>
             </p>
         </div>
 
         <form action="/login">
-            <h8>Si deseas modificar tus datos, haz click aquí:</h8><br>
+            <h8>Si deseas modificarlos, haz click aquí:</h8><br>
             <br>
-            <button type="submit">Inicio de sesión</button>
+            <button type="submit">Modificar</button>
         </form>
         <br>
 
+        <div style="text-align:center; margin-bottom: 10px; font-family:Optima;">
+            <form action="/control_center">
+            <button type="submit">Regresar al centro de control</button>
+        </form>
+        </div>
+        <br>
         <div style="text-align:center; background-color:powderblue;">
             <small><b>Créditos:</b><br>
             - Esteban Sierra Gayón y Lina Pérez González - Grupo 3 - <br>
             - Desarrollo Web - Profesor Ciro Gamboa - MisionTIC2022 - <br>
             &#128512;
             <br>
-            Foto tomada de Coco School: <a href="https://www.cocoschool.com/" title="Perfil: ">www.cocoschool.com/</a>
+            <a href="https://www.freepik.es/vectores/tecnologia">Vector de Tecnología creado por macrovector - www.freepik.es</a>
         </small>
         </div>
 

@@ -6,19 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body style="text-align:center;">
+<body style="text-align:center; font-family:Optima;">
 
     <div style="text-align:center;">
-        <img src="https://www.prevent.es/Files/HtmlCustom/Documentos/registro%20rgpd.jpg" alt="HTML5 Icon"><br>
+        <img src="https://www.prevent.es/Files/HtmlCustom/Documentos/registro%20rgpd.jpg" alt="HTML5 Icon" width="424"; height="424"/><br>
     </div>
 
     <div>
         <h1 style="margin-bottom: 10px;">Registro</h1>
     </div>
 <br>
-    <!--<form action="http://127.0.0.1:5000/login">-->
-        <form action="/login">
-        <h8>Si ya está registrado, inicie sesión aquí:</h8><br>
+    <form action="/login">
+        <h8>Si ya estás registrado, inicia sesión aquí:</h8><br>
         <br>
         <button type="submit">Inicio de sesión</button>
     </form>
@@ -26,37 +25,40 @@
     <br>
 
     <form action="{{url_for('create_user')}}" method="post" enctype="multipart/form-data">
-        <h2 style="margin-bottom: 10px;">Ingrese sus datos para crear su usuario</h2>
+        <h2 style="margin-bottom: 10px;">Ingresa tus datos para crear su usuario</h2>
 
+        <div>
+            <b>Asegúrate de llenar todos los campos de manera correcta. Todos los campos son obligatorios</b><br>
+            </p>
+        </div>
+        <br>
+        <br>
+        <br>
         <div style="margin-bottom: 13px;">
-            <p style="font-family:Optima;">
             <b>Nombres:</b><br>
             <input type="text" name="Nombres" placeholder="Escriba su(s) nombre(s) aquí">
             </p>
         </div>
         
         <div style="margin-bottom: 13px;">     
-            <p style="font-family:Optima;"></p>          
             <b>Apellidos:</b><br>
             <input type="text" name="Apellidos" placeholder="Escriba sus apellidos">
             </p>
         </div>
 
         <div style="margin-bottom: 13px;">
-            <p style="font-family:Optima;">
             <b>Email:</b><br>
             <input type="text" name="Email" placeholder="Escriba su email">
             </p>
         </div>
 
         <div style="margin-bottom: 13px;">
-            <p style="font-family:Optima;">
             <b>Contraseña:</b><br>
             <input type="password" name="Contraseña" placeholder="Escriba su contraseña">
             </p>
         </div>
 
-        <div style="font-family:Optima; margin-bottom: 13px;">
+        <div>
         <b>Tipo de tienda:</b><br>
 
         <input type="radio" id="Supermercado" name="Tipo de tienda" value="Supermercado">
@@ -98,11 +100,11 @@
 
         <div style="margin-bottom: 13px;">
             <p><strong>Por favor lea los términos y condiciones del servicio:</strong><br>
-            <small>Al marcar la opción "Acepto las Condiciones de uso" usted está de acuerdo en aceptar los siguientes términos y condiciones ("Condiciones de uso"). 
+            <small>Al marcar la opción "Acepto las Condiciones de uso" estás de acuerdo en aceptar los siguientes términos y condiciones ("Condiciones de uso"). 
                 Cualquier nueva característica o herramienta que pueda añadirse al actual servicio estarán también sujetas a los términos y condiciones de uso.
-                Usted debe saber que cuando crea una tienda virtual dentro del sistema mitiendavirtual.com, usted es responsable del funcionamiento de la tienda virtual que 
-                ha creado, así como de los datos que ha introducido, de las operaciones de compraventa que se realicen y del manejo de los datos personales de los compradores 
-                registrados en su tienda virtual.</small><br>
+                Debes saber que cuando creas una tienda virtual dentro del sistema mitiendavirtual.com, eres responsable del funcionamiento de la tienda virtual que 
+                has creado, así como de los datos que has introducido, de las operaciones de compraventa que se realicen y del manejo de los datos personales de los compradores 
+                registrados en tu tienda virtual.</small><br>
             </p>
         </div>
 
