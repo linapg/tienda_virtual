@@ -1,2 +1,66 @@
-:( 
-    maldito inventario!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="text-align:center;">
+
+
+    <div style="https://get.apicbase.com/wp-content/uploads/2020/09/ITR-Blogpost-Image-1-1-2048x1216.png" alt="HTML5 Icon"/><br>
+    </div>
+    <br>
+    <h1> Inventario</h1>
+    <br>
+    <table rule="rows" style="border: 1px solid black;">
+        <tbody style="border: 1px solid black;">
+            <tr>
+                <td> id de inventario </td>
+                <td> fecha  </td>
+                <td> id de producto </td>
+                <td> cantidad de entrada de producto </td>
+                <td> costo unidad </td>
+                <td> costo total inventario </td>
+                <td> precio de venta </td>
+                <td> ganancia por unidad </td>
+                <td> proveedor </td>
+            </tr>
+            {%  for inventory_item in inventory_data:  %}
+                
+                <tr>
+                    <td>{{  inventory_item.id  }}</td>
+                    <td>{{  inventory_item.date  }}</td>
+                    <td>{{  inventory_item.product_id }}</td>
+                    <td>{{  inventory_item.entry  }}</td>
+                    <td>{{  inventory_item.unit_cost }}</td>
+                    <td>{{  inventory_item.total_inventory_cost }}</td>
+                    <td>{{  inventory_item.selling_price  }}</td>
+                    <td>{{  inventory_item.profit_per_unit  }}</td>
+                    <td>{{  inventory_item.supplier  }}</td>
+
+                </tr>
+            {%  endfor  %}
+        </tbody>
+    </table>
+
+
+    <div style="text-align:center; margin-bottom: 10px; font-family:Optima;">
+            <form action="/control_center">
+            <button type="submit">Regresar al centro de control</button>
+        </form>
+    </div>
+        <br>
+        <br>
+        <div style="text-align:center; background-color:powderblue;">
+            <small><b>Créditos:</b><br>
+            - Esteban Sierra Gayón y Lina Pérez González - Grupo 3 - <br>
+            - Desarrollo Web - Profesor Ciro Gamboa - MisionTIC2022 - <br>
+            &#128512;
+            <br>
+            Foto tomada TAS Sistemas: <a href="https://bit.ly/3AdaAc6" title="Tas Sistemas: ">www.tassistemas.com.br</a>
+        </small>
+        </div>
+</body>
+</html>

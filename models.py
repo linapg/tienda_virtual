@@ -49,14 +49,12 @@ class Inventory(db.Model):
     
     entry = db.Column(db.Integer)
     unit_cost = db.Column(db.Integer)
-    total_quantity = db.Column(db.Integer)
     total_inventory_cost = db.Column(db.Integer)
     selling_price = db.Column(db.Integer)
     profit_per_unit = db.Column(db.Integer)
-    total_profit = db.Column(db.Integer)
     supplier = db.Column(db.String)
     
-    def __init__(self,date,product_id,entry,unit_cost,total_quantity,total_inventory_cost,selling_price,profit_per_unit,total_profit,supplier):
+    def __init__(self,date,product_id,entry,unit_cost,total_inventory_cost,selling_price,profit_per_unit,supplier):
         self.date = date
         self.product_id = product_id
         #self.initial_inventory = initial_inventory
@@ -68,11 +66,9 @@ class Inventory(db.Model):
         #self.bare_minimum = bare_minimum
         self.entry = entry
         self.unit_cost = unit_cost
-        self.total_quantity = total_quantity
         self.total_inventory_cost = total_inventory_cost
         self.selling_price = selling_price
         self.profit_per_unit = profit_per_unit
-        self.total_profit = total_profit
         self.supplier = supplier
         
 

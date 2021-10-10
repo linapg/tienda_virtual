@@ -23,13 +23,12 @@ app.secret_key = 'some-secret-key'
 #Definimos la base de datos
 db =  SQLAlchemy(app) 
 
-#Importamos los modelos
-from models import Shopowner, Product, Inventory
-
 #Creamos el esquema de la base de datos
 db.create_all()
 db.session.commit()
 
+#Importamos los modelos
+from models import Shopowner, Product, Inventory
 
 #-------------< Rutas >------------------------
 
@@ -129,16 +128,7 @@ def check_user():
     else:
         return render_template("userdata_notfound.html")
         
-    
-#Ruta para modificación de datos personales del usuario (por ahora está manual - falta desarrollo con HTML y POST)
-@app.route('/update_shopowner')
-def update_shopowner():
-    old_name = "María"
-    new_name = "José"
-    old_song = Shopowner.query.filter_by(name=old_name).first()
-    old_song.name = new_name
-    db.session.commit()
-    return "actualización exitosa"
+
 
 #RUTA CERRAR SESIÓN
 #session.pop('user_id', None)
@@ -158,29 +148,29 @@ def product():
     product = request_data['Producto']
     category = request_data['Categoría']
     unit = request_data['Unidad']
-    #shopowner_id=Shopowner.query.filter(Shopowner.id)
-    #print(shopowner_id)
     shopowner_id = session['user_id']
     
     entry = Product(product,category,unit,shopowner_id)
     db.session.add(entry)
     db.session.commit()
     
+    # Get the product id
+    # pass product id to next 
+    
     print("id usuario: " + str(session['user_id']))
     print("Producto: " + product)
     print("Categoría: " + category)
     print("Unidad de producto: " + unit)
-    print("ID Tendero: " + str(shopowner_id))
 
     return render_template("register_inventory.html")
     
 #Ruta para formulario de registro en el inventario
 @app.route("/register_inventory")
 def register_inventory():
-    return render_template("iregister_inventory.html")
+    return render_template('register_inventory.html')
 
 #Ruta para añadir información de producto al inventario
-@app.route("/feed_inventory")
+@app.route("/feed_inventory", methods=['POST','GET'])
 def feed_inventory():
     request_data = request.form
     date = request_data['Fecha']
@@ -189,18 +179,14 @@ def feed_inventory():
     selling_price = request_data['Precio de venta']
     supplier = request_data['Proveedor']
 
-    #shopowner_id=Shopowner.query.filter(Shopowner.id)
-    #print(shopowner_id)
-    shopowner_id = session['user_id']
+    total_inventory_cost = int(entry) * int(unit_cost)
+    profit_per_unit = int(selling_price) - int(unit_cost)
     
-    total_quantity = 0
-    total_inventory_cost = entry * unit_cost
-    profit_per_unit = selling_price - unit_cost
-    total_profit = profit_per_unit * total_quantity
-    
-    entry_inventory = Inventory(date,entry,unit_cost,total_quantity,total_inventory_cost,selling_price,profit_per_unit,total_profit,supplier)
+    entry_inventory = Inventory(date,6,entry,unit_cost,total_inventory_cost,selling_price,profit_per_unit,supplier)
     db.session.add(entry_inventory)
-    db.session.commit()
+    result = db.session.commit()
+    
+    print(result)
     
     print("id usuario: " + str(session['user_id']))
     print("Cantidad de entrada " + str(entry))
@@ -208,17 +194,15 @@ def feed_inventory():
     print("Precio de venta:" + str(selling_price))
     print("Precio unidad:" + str(unit_cost))
     print("Proveedor: " + supplier)
-    print("Cantidad total:" + str(total_quantity))
     print("Costo total inventario:" + str(total_inventory_cost))
     print("Ganancia por unidad:" + str(profit_per_unit))
-    print("Ganancia total:" + str(total_profit))
 
-    return render_template("inventory.html")
+    return render_template('inventory.html')
 
 #Ruta para ver el inventario
 @app.route('/inventory')
 def inventory():
-    inventory_data = db.session.query(Product).all()
+    inventory_data = db.session.query(Inventory).all()
     print(inventory_data)
     return render_template("inventory.html", inventory_data=inventory_data)
 

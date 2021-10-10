@@ -6,59 +6,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body style="text-align:center;">
+<body style="text-align:center; font-family:Optima; margin-bottom: 10px;">
 
-    <div style="text-align:center;">
+    <div>
         <img src="https://letstranzact.com/blog/wp-content/uploads/2021/05/InventoryManagement_Hero@3x.png" alt="HTML5 Icon" style="width: 50%; height: 50%"><br>
     </div>
 
     <div>
-        <h1 style="margin-bottom: 10px;">Registro de información sobre el inventario de productos</h1>
+        <h1>Registro de información sobre el inventario de productos</h1>
     </div>
     
     <form action="{{url_for('feed_inventory')}}" method="post" enctype="multipart/form-data">
-        <h2 style="margin-bottom: 10px;">Ingresa la información detallada de tus productos en el inventario</h2>
+        <h2>Ingresa la información detallada de tus productos en el inventario</h2>
 
         <div>
             <b>Asegúrate de llenar todos los campos de manera correcta. Todos los campos son obligatorios</b><br>
             </p>
         </div>
         <br>
-        <br>
-        <br>
-
         <div style="margin-bottom: 13px;">
-            <p style="font-family:Optima;">
+            <p>
             <b>Fecha:</b><br>
-            <input type="text" name="Fecha" placeholder="Escriba el nombre del producto aquí">
+                <label for="Fecha">Fecha</label>
+                <input type="date" id="Fecha" name="Fecha">
             </p>
         </div>
-        
+
         <div style="margin-bottom: 13px;">     
             <p style="font-family:Optima;"></p>          
             <b>Cantidad de entrada de producto:</b><br>
-            <input type="text" name="Cantidad de entrada de producto" placeholder="Escriba la categoría del producto aquí">
+            <input type="number" name="Cantidad de entrada de producto" placeholder="Escribe la cantidad a ingresar del producto aquí">
             </p>
         </div>
 
         <div style="margin-bottom: 13px;">
             <p style="font-family:Optima;">
             <b>Costo unidad:</b><br>
-            <input type="text" name="Costo unidad" placeholder="Escriba la unidad del producto">
+            <input type="number" name="Costo unidad" placeholder="Escribe el costo por unidad del producto">
             </p>
         </div>
 
         <div style="margin-bottom: 13px;">
             <p style="font-family:Optima;">
             <b>Precio de venta:</b><br>
-            <input type="number" name="Precio de venta" placeholder="Escriba el precio por unidad">
+            <input type="number" name="Precio de venta" placeholder="Escribe el precio de venta por unidad">
             </p>
         </div>
 
         <div style="margin-bottom: 13px;">
             <p style="font-family:Optima;">
             <b>Proveedor:</b><br>
-            <input type="number" name="Proveedor" placeholder="Escriba el precio por unidad">
+            <input type="text" name="Proveedor" placeholder="Escribe el proveedor">
             </p>
         </div>
         
